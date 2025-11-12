@@ -3,7 +3,7 @@ const { port1, port2 } = new MessageChannel();
  window.addEventListener('message', onMessage);
 
 document.body.addEventListener('click', () => {
-   window.parent.postMessage({ message: 'Hello whos there' }, '*');
+   window.parent.postMessage({ date: new Date() }, '*');
 })
 
 
