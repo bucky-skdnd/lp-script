@@ -1,39 +1,19 @@
+const channel = new BroadcastChannel("betterliving");
+
+channel.onmessage = onmessage;
+
 document.body.addEventListener('click', () => {
-   window.parent.postMessage({ message: 'Hello whos there' }, '*');})
+   window.parent.postMessage({ message: 'Hello whos there' }, '*');
+})
 
-const channel = new MessageChannel();
-let parentFramePort;
-
-// Setup the transferred port
-function initPort(e) {
-  alert(e.origin);
-  if (e.origin !== "localhost:3000") {
-    return;
-  }
-
-  [parentFramePort] = e.ports || [];
-
-  if (!parentFramePort) {
-    return;
-  }
-
-  // parentFramePort = e.ports[0];
-  parentFramePort.onmessage = onMessage;
-}
 
 // Handle messages received on port2
 function onMessage(e) {
   alert(JSON.stringify(e.data));
-  parentFramePort.postMessage(`Message received by IFrame: "${e.data}"`);
+  channel.postMessage(`Message received by IFrame: "${e.data}"`);
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  alert("DOM fully loaded and parsed");
-  
-  // Listen for the initial port transfer message
-  window.addEventListener("message", initPort);
-
-  let timerId = setInterval(() => {
-    window.parent.postMessage("Hello whos there", "*");
-  }, 1000);
+ channel.postMessage("DOM fully loaded and parsed");
 });
+
