@@ -1,5 +1,5 @@
 document.body.addEventListener('click', () => {
-  window.alert('test')})
+   window.parent.postMessage({ message: 'Hello whos there' }, '*');})
 
 const channel = new MessageChannel();
 let parentFramePort;
