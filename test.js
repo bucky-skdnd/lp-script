@@ -1,5 +1,5 @@
-// document.body.addEventListener('click', () => {
-//   window.alert('test')})
+document.body.addEventListener('click', () => {
+  window.alert('test')})
 
 const channel = new MessageChannel();
 let parentFramePort;
@@ -35,6 +35,5 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   let timerId = setInterval(() => {
     window.parent.postMessage('Hello whos there", '*');
-  }, 2000);
-  
+  }, 1000);
 });
