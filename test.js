@@ -29,4 +29,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   
   // Listen for the initial port transfer message
   window.addEventListener("message", initPort);
+
+  const clearId = setInterval(()=>{
+    if(window.parent) {
+      window.parent.postMessage('Hello whos there");
+    }
+  }, 1000)
 });
