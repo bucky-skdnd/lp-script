@@ -9,7 +9,7 @@ window.addEventListener('message', (event) => {
 });
 
 document.body.addEventListener('click', () => {
-   iframePort.postMessage({ date: new Date() }, '*');
+   iframePort.postMessage({ date: new Date() });
 })
 
 // Handle messages received on port2
