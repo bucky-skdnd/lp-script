@@ -19,12 +19,10 @@ function onMessage(e) {
   // channel.postMessage(`Message received by IFrame: "${e.data}"`, '*');
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
+document.addEventListener("load", () => {
     // send iframe Height
-    setTimeout(()=> {
-        var container = document.querySelector('[data-height]');
-        iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});
-    }, 3000);
+    var container = document.querySelector('[data-height]');
+    iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});
 });
 
 window.addEventListener('resize', () => {
