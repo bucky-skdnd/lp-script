@@ -14,7 +14,7 @@ document.body.addEventListener('click', () => {
 
 // Handle messages received on port2
 function onMessage(e) {
-    console.log('Message from parent:', messageEvent.data);
+    console.log('Message from parent:', e.data);
   alert(JSON.stringify(e.data));
   // channel.postMessage(`Message received by IFrame: "${e.data}"`, '*');
 }
