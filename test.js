@@ -1,9 +1,12 @@
 // document.body.addEventListener('click', () => {
 //   window.alert('test')})
+
+const channel = new MessageChannel();
 let parentFramePort;
 
 // Setup the transferred port
 function initPort(e) {
+  alert(e.origin);
   if (e.origin !== "localhost:3000") {
     return;
   }
@@ -30,9 +33,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Listen for the initial port transfer message
   window.addEventListener("message", initPort);
 
-  const clearId = setInterval(()=>{
-    if(window.parent) {
-      window.parent.postMessage('Hello whos there");
-    }
-  }, 1000)
+  let timerId = setInterval(() => {
+    window.parent.postMessage('Hello whos there", '*');
+  }, 2000);
+  
 });
