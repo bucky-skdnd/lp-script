@@ -35,6 +35,7 @@ document.addEventListener("load", () => {
 });
 
 window.addEventListener('resize', () => {
+    console.log('resized');
   var container = document.querySelector('[data-height]');
   iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});  
 });
