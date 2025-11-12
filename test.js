@@ -1,6 +1,15 @@
-const { port1, port2 } = new MessageChannel();
 
- window.addEventListener('message', onMessage);
+
+window.addEventListener('message', (event) => {
+    if (event.data === 'init' && event.ports.length > 0) {
+       const iframePort = event.ports[0];
+       // Now the iframe can use iframePort to send and receive messages
+       iframePort.onmessage = (messageEvent) => {
+           console.log('Message from parent:', messageEvent.data);
+       };
+       iframePort.postMessage('Hello from iframe!');
+   }
+});
 
 document.body.addEventListener('click', () => {
    window.parent.postMessage({ date: new Date() }, '*');
