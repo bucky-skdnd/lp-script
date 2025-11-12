@@ -14,13 +14,15 @@ window.addEventListener('message', (event) => {
 
 // Handle messages received on port2
 function onMessage(e) {
-    console.log('Message from parent:', e.data);
-  alert(JSON.stringify(e.data));
+  // console.log('Message from parent:', e.data);
+  // alert(JSON.stringify(e.data));
   // channel.postMessage(`Message received by IFrame: "${e.data}"`, '*');
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
- // channel.postMessage("DOM fully loaded and parsed", '*');
- window.parent.postMessage({ message: 'DOMContentLoaded' }, '*');
+    // send iframe Height
+    var container = document.querySelector('[data-height]');
+    
+    iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height });
 });
 
