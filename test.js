@@ -34,6 +34,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
   window.addEventListener("message", initPort);
 
   let timerId = setInterval(() => {
-    window.parent.postMessage('Hello whos there", '*');
+    window.parent.postMessage("Hello whos there", "*");
   }, 1000);
 });
