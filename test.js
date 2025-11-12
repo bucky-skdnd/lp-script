@@ -21,8 +21,11 @@ function onMessage(e) {
 
 document.addEventListener("DOMContentLoaded", (event) => {
     // send iframe Height
-    var container = document.querySelector('[data-height]');
+    setTimeout(()=> {
+            var container = document.querySelector('[data-height]');
     
     iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height });
+    }, 3000);
+
 });
 
