@@ -1,42 +1,65 @@
+"use strict";
+// iframe.ts
+// this file is used to send and receive messages between the iframe and the parent window
 window.iframePort = null;
-
-window.addEventListener('message', (event) => {
-    if (event.data === 'init' && event.ports.length > 0) {
-       iframePort = event.ports[0];
-       // Now the iframe can use iframePort to send and receive messages
-       iframePort.onmessage = onMessage;
-   }
-});
-
-// document.body.addEventListener('click', () => {
-//    iframePort.postMessage({ date: new Date() });
-// })
-
-// Handle messages received on port2
-function onMessage(e) {
-  console.log('Message from parent:', e.data);
-  // alert(JSON.stringify(e.data));
-  // channel.postMessage(`Message received by IFrame: "${e.data}"`, '*');
-switch (event.data.type) {
-  case 'getIframeHeight':
-    const container = document.querySelector('[data-height]');
-    iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});
-    break;
-  default:
-    console.log('default');
-    break;
-}
-}
-
 document.addEventListener("load", () => {
-    // send iframe Height
-    var container = document.querySelector('[data-height]');
-    iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});
+    sendIframeHeight();
 });
-
-window.addEventListener('resize', () => {
-    console.log('resized');
-  var container = document.querySelector('[data-height]');
-  iframePort.postMessage({type: 'setIframeHeight', data: { height: container.dataset.height }});  
+document.addEventListener("resize", () => {
+    sendIframeHeight();
 });
-
+// initialize iframe port shake
+window.addEventListener("message", (event) => {
+    if (event.data === "init" && event.ports.length > 0) {
+        window.iframePort = event.ports[0];
+        // Now the iframe can use iframePort to send and receive messages
+        window.iframePort.onmessage = onMessage;
+    }
+});
+const sendIframeHeight = () => {
+    if (!window.iframePort) {
+        return;
+    }
+    const container = document.querySelector("[data-height]") || null;
+    window.iframePort.postMessage({
+        type: "setIframeHeight",
+        data: {
+            height: container && Number(container.dataset.height),
+        },
+    });
+};
+const sendRoutePathname = (pathname) => {
+    if (!window.iframePort) {
+        return;
+    }
+    window.iframePort.postMessage({
+        type: "route",
+        data: { pathname },
+    });
+};
+const sendReplacePathname = (pathname) => {
+    if (!window.iframePort) {
+        return;
+    }
+    window.iframePort.postMessage({
+        type: "replace",
+        data: { pathname },
+    });
+};
+// Handle messages received on port2
+function onMessage(event) {
+    console.log("Message from parent:", event.data);
+    const messageEventData = event.data;
+    if (!window.iframePort) {
+        return;
+    }
+    switch (messageEventData.type) {
+        case "getIframeHeight":
+            sendIframeHeight();
+            break;
+        default:
+            console.log("default");
+            break;
+    }
+}
+//# sourceMappingURL=iframe.js.map
