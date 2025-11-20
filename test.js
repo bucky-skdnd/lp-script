@@ -24,7 +24,7 @@ const sendIframeHeight = () => {
     window.iframePort.postMessage({
         type: "setIframeHeight",
         data: {
-            height: container && Number(container.dataset.height),
+            height: container && Number(container.offsetHeight),
         },
     });
 };
